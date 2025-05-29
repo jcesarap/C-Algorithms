@@ -30,29 +30,30 @@ int main() {
     query_vector(dataset, boundaries, query);
     break;
   }
-    return 0;
   }
+  return 0;
 }
 
 int query_vector(int chosen_vector[], int size, int query) {
   int numberOfVectorElements = size;
   int iterations = 1;
   int start = 0;
-  int end = size;
-  while (start != end) {
+  int end = size - 1;
+  while (start <= end) {
     int middle = (start + end) / 2;
     if (chosen_vector[middle] == query) {
       printf(" Valor: %d \n Encontrado na posição: %d \n Após: %d iterações", query, middle, iterations);
-      break;
+      return 1;
     } else if (chosen_vector[middle] > query) {
       // ignore right of the list, then continue search
-      end = middle;
+      end = middle - 1; // Must ignore the tested case for this to progress
     } else if (chosen_vector[middle] < query) {
       // ignore left of the list, then continue search
-      start = middle;
+      start = middle + 1;
     }
     iterations++;
   }
+  printf("Valor não encontrado\n");
   // Show index of where the number was, or message that it was not there, and how many iterations it took
   return 0;
 }
