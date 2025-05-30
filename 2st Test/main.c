@@ -26,25 +26,17 @@ void sort_array(int array[], int size) {
 
 // Print the array up to the given size
 void print_array(int array[], int size) {
-  printf("Current sorted array:");
-  for (int i = 0; i < size; i++) {
-    printf(" %d", array[i]);
-  }
-  printf("\n");
-}
-
-int main() {
-  int array[10];
-  int total = 10;
-  // Proof of random numbers in array
+  printf("\n ——— Current sorted array ———");
   int cont = 0;
-  printf("\n ——— Random elements ———");
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < 10; i++) { // You can also print up to current iteration
     printf("\n %d: %d", cont, array[i]);
     cont++;
   }
-  // Loop over the 10 spaces
-  printf("\n ——— Sorted ———");
+}
+
+int main() {
+  int array[10] = {1};
+  int total = 10;
   for (int i = 0; i != total; i++) {
     // Prompt
     printf("\nEnter a number: ");
