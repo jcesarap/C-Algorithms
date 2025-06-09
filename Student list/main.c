@@ -1,45 +1,28 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
+#include <locale.h>
 
-// PENDING NOTES IN SKETCH
-
-
-
-
-
-
-
-
-// Gosto de manter minhas anotações em markdown, mas quando se trata de código
-// Gosto de manter como comentários, no meio do código e em seções dedicadas
-// Por isso a estrutura um pouco "bloated" - como é um código de estudo
-
-
-// --- Requirements
-// Aluno struct
-// with nome, numMatricula e nota
-// Note: Using typedef is the same thing as this, but acting as/giving an alias to the datatype
+// Notas pessoais
+//      Excesso de anotações de pesquisa foi documentado em "College/Estructured Programming/Advanced Concepts"
+//      Nunca fazer (novamente) a morphographia no mesmo arquvivo do código ("Sketch" file serves that purpose)
 
 #define NUMBER 0
 #define NAME 1
 
-struct PassingStruct {
-    char passing_nome[50];
-    int passing_numMatricula;
-    int passing_nota;
-};
-
-struct Aluno { // New data type grouping multiple variables
+// Using typedef is the same thing as this, but acting as/giving an alias to the datatype
+typedef struct { // New data type grouping multiple variables
     char nome[50];
     int numMatricula;
     int nota;
-    struct PassingStruct passingList; // nests the struct as a list inside Aluno
-    // To access PassingStruct fields: pessoaVariable.endereco.rua, pessoaVariable.endereco.numero...
-};
+} AlunoStruct;
 
-struct Aluno indexAlunos[100]; // Same as adding only the last item in the end of the struct definition
+AlunoStruct Aluno;
+AlunoStruct indexAlunos [100];
+// Declara um 
 
 // --- Requirements
+// Aluno struct; with nome, numMatricula e nota
 // On main, create vectors: index, name, numMatricula, nota
 // Prompt user for these
 // Print name of those who've failed the class (nota < 6)
@@ -48,32 +31,50 @@ struct Aluno indexAlunos[100]; // Same as adding only the last item in the end o
 // filterStudents       needs: each struct      returns: passing (which is: a struct)
 // printPassing         needs: passing
 
+// Features
 void userPrompt(void);
-int filterStudents(int passing);
-int validateInput(void*, int type);
+int filterStudents();
+void validateInput(void*, int type);
 void printPassing();
-
-
-// declare passing;
+// Debugging
+void test_userPrompt();
+void test_filterStudents();
+void test_printPassing();
 
 // --- --- --- --- --- --- --- --- --- --- --- --- Functions
 
 int main() {
+    // Usando windows esses dias...
+    setlocale(LC_ALL, "");
+    setlocale(LC_CTYPE, "");
     // Find a ((n) efficient) way to run tests through the functions, to pin down problems
     // Begin studying and exploring "testing" and "debugging" and part of coding
     // ...not something you do when things go wrong, but by default - as they always do.
+
     userPrompt();
-    filterStudents(passing);
-    printPassing();
+    test_userPrompt();
+
+    filterStudents();
+    test_filterStudents();
+
+    printPassing(); // It would be more efficient to store and trim the list, but printing is enough
+    // Self-debugging
 }
 
-// Crie função que valída input
+// Morphographia
 // recebe dois parametros
 // 1 do dado que vai validar
 // ... Isso cria um problema... Tipos de dados diferentes
+//      Isso pode ser resolvido com Enum (ou diretiva de pre-processamento) & "Unions" com "void*"
 // 2 para o tipo de validação (senha, nome, número)
-
-void validadeInput(void*, int type) {
+void validateInput(void*, int type) { // Num programa real precisaria tratar a excessões mais minuciosas
+    // Morphographia
+    // Se numero; não deve ter letras dentro
+    // Se string; loop em todos caracteres; não deve ter números dentro
+    //      Use: "isdigit()"
+    //      Retorno falso ou verdadeiro cobre ambos casos
+    // Veja também se o usuário não digitou "voltar"
+    //      Use strcmp
     if (type == NUMBER) {
         // Cast void* to int
 
@@ -96,32 +97,35 @@ void userPrompt() {
     for (int i = 0; i < numOfStudents; i++) {
         printf("        (Você pode voltar a qualquer momento, digitando \"voltar\" num campo) \n");
         printf("Nome do %dº aluno: ", i);
-        scanf("%s", &Aluno.nome[50]);
-        if (Aluno.nome == "voltar" || Aluno.numMatricula == "voltar" || Aluno.nota == "voltar") {
-            i--;
-            continue; // Skips the rest of the iteration
-        }
+        scanf("%c", &Aluno.nome);
+        validateInput(*Aluno.nome, NUMBER);
+
         printf("Número da matrícula de %d: ", Aluno.numMatricula);
         scanf("%d", &Aluno.numMatricula);
-        if (Aluno.nome == "voltar" || Aluno.numMatricula == "voltar" || Aluno.nota == "voltar") {
-            i--;
-            continue;
-        }
+        validateInput(Aluno.numMatricula, NAME);
+
         printf("Qual foi a nota de %s? ", Aluno.nome);
         scanf("%d", &Aluno.nota);
-        if (Aluno.nome == "voltar" || Aluno.numMatricula == "voltar" || Aluno.nota == "voltar") {
-            i--;
-            continue;
-        }
-        // Num programa real precisaria tratar a excessão de dados impróprios - como adicionando números nas strings de nome, ou o contrário
+        validateInput(Aluno.nota, NUMBER);
     }
 }
 
 int filterStudents() {
-    // --- Map
-    return passing;
+    
 }
 
 void printPassing() {
     // --- Map
+}
+
+// Debugging
+
+void test_userPrompt() {
+
+}
+void test_filterStudents() {
+
+}
+void test_printPassing() {
+
 }
