@@ -1,6 +1,25 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+void sort_array(int array[], int size);
+void print_array(int array[], int size);
+
+int main() {
+  int array[10] = {1};
+  int total = 10;
+  
+  for (int i = 0; i < total; i++) {
+    
+    // Prompt
+    printf("\nEnter a number: ");
+    scanf("%d", &array[i]);
+    
+    // Functions: Sort and Print
+    sort_array(array, i + 1); // 1 up to current index - so the random numbers are not shown, but they're still there
+    print_array(array, i + 1);
+  }
+}
+
 // ——— In short, to loop over a loop:
 // Do the inner loop and its conditions
 // Do a "do" and stablish the break conditions
@@ -10,7 +29,7 @@ void sort_array(int array[], int size) {
   do {                   // At least once
     modified = false;
     for (int i = 0; i < size - 1; i++) { // For each element
-      if (array[i] > array[i + 1]) {     // If elements are equal
+      if (array[i] < array[i + 1]) {     // If elements are equal
         // Replace them
         int aux = array[i];
         array[i] = array[i + 1];
@@ -26,24 +45,10 @@ void sort_array(int array[], int size) {
 
 // Print the array up to the given size
 void print_array(int array[], int size) {
-  printf("\n ——— Current sorted array ———");
+  printf("\n ——— Currently sorted array ———");
   int cont = 0;
-  for (int i = 0; i < 10; i++) { // You can also print up to current iteration
-    printf("\n %d: %d", cont, array[i]);
+  for (int i = 0; i < size; i++) { // You can also print up to current iteration
+    printf("\n %d: %d", (cont+1), array[i]);
     cont++;
   }
-}
-
-int main() {
-  int array[10] = {1};
-  int total = 10;
-  for (int i = 0; i != total; i++) {
-    // Prompt
-    printf("\nEnter a number: ");
-    scanf("%d", &array[i]);
-    // Sort and Print
-    sort_array(array, i); // 1 up to current index - so the random numbers are not shown, but they're still there
-    print_array(array, i);
-  }
-  return 0;
 }
